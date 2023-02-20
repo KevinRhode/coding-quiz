@@ -1,0 +1,46 @@
+html{
+    font-size: 62.5%;
+}
+header{
+    font-size: 1.55rem;
+    padding: 15px;
+    min-height: 60px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+header label{
+    text-align: end;
+}
+
+h2{
+    font-size: 3rem;
+}
+.quiz-question-container{
+    display: flex;
+    justify-content: center;
+}
+.quiz-question-card{
+    display: flex;
+    flex-direction: column;
+    align-items: end;
+}
+.quiz-question-card h2{
+    display: flex;
+    min-height: 5rem;
+    align-items: center;
+    margin-left: 1rem;
+    margin-right: 1rem;
+}
+.quiz-question-card ol{
+ font-size: 1.25rem;   
+ margin-top: 2rem;
+ width: 85%;
+}
+.quiz-question-card li {
+    padding: 2px 5px;
+    font-size: 1.75rem;
+}
+.quiz-question-card li button{
+    min-width: 15rem;
+}
