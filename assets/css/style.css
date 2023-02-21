@@ -1,3 +1,8 @@
+:root{
+    --main-background-color:#351c75;
+    --main-background-color-hover:#bd60e7;
+    --main-btn-color:#FFF;
+}
 html{
     font-size: 62.5%;
 }
@@ -31,6 +36,23 @@ h2{
     align-items: center;
     margin-left: 1rem;
     margin-right: 1rem;
+}
+.quiz-question-card p{
+    font-size: 1.85rem;
+    text-align: center;
+    padding: 0 1rem;
+    /* width: 50rem; */
+}
+.quiz-question-card button{
+    font-size: 2rem;
+    margin-top: 2.5rem;
+    padding: 1rem 1.65rem;
+    border-radius: 1rem;
+    background-color: var(--main-background-color);
+    color: var(--main-btn-color);
+}
+.quiz-question-card button:hover {
+    background-color: var(--main-background-color-hover);
 }
 .quiz-question-card ol{
  font-size: 1.25rem;   
