@@ -482,6 +482,9 @@ function loadHighScores(){
 }
 // https://stackoverflow.com/questions/16611497/how-can-i-get-the-name-of-an-html-page-in-javascript
 var path = window.location.pathname;
+var path2 = window.location.origin;
+var path3 = window.location.hostname;
+var path4 = window.location.href;
 var page = path.split("/").pop();
 if (page === "index.html") {
   loadStartPage();
