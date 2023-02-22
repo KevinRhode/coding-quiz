@@ -405,10 +405,17 @@ function createDelay(){
 function goHome(){
   window.location.href="../index.html";
 }
-function goHighScores(){
-  window.location.href="./assets/highscores.html";
+function goHighScores(evt){
+  if (evt === undefined) {
+    window.location.href="./assets/highscores.html";
+  } else {
+    window.location.href="./highscores.html";
+  }
+  
+  
   
 }
+
 function compareScore(a,b){
   let value1 = a.score;
   let value2 = b.score;
