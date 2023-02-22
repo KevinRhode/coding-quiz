@@ -488,3 +488,8 @@ if (page === "index.html") {
 } else if (page === "highscores.html") {
   loadHighScores();
 }
+
+//test for gitpages
+if (path === "/coding-quiz/") {
+  loadStartPage();
+}
