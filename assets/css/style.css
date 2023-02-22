@@ -28,7 +28,8 @@ h2{
 .quiz-question-card{
     display: flex;
     flex-direction: column;
-    align-items: end;
+    align-items: center;
+    width: 96%;
 }
 .quiz-question-card h2{
     display: flex;
@@ -36,6 +37,15 @@ h2{
     align-items: center;
     margin-left: 1rem;
     margin-right: 1rem;
+    /* font-size: 2.25rem; */
+}
+.quiz-question-card h3{
+    display: flex;
+    min-height: 5rem;
+    align-items: center;
+    margin-left: 1rem;
+    margin-right: 1rem;
+    font-size: 2.25rem;
 }
 .quiz-question-card p{
     font-size: 1.85rem;
@@ -77,4 +87,20 @@ h2{
     border-top: #000 solid 2px;
     justify-content: start;
     text-align: start;
+}
+.enter-initials{
+    display: flex;
+    align-items: center;
+}
+.enter-initials button{
+   
+    margin-top: 0;
+   
+}
+
+@media screen and (min-width:556px) {
+    .quiz-question-card{
+       
+        width: 80%;
+    }
 }

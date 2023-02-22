@@ -20,45 +20,39 @@ let question3={
 let questionsList = [question1,question2,question3]
 //calculate question score
 let qScorePer = 100/questionsList.length;
-localStorage.setItem("myListOfQuestions",JSON.stringify(questionsList));
-localStorage.setItem("testScore",JSON.stringify(0))
+
+window.sessionStorage.setItem("myListOfQuestions",JSON.stringify(questionsList));
+window.sessionStorage.setItem("testScore",JSON.stringify(0))
 //window.localStorage.setItem("myObject", JSON.stringify(myObject));
 questionCounter = 0;
 timerCount =0;
-let timeLeft = 75;
+let timeLeft = 10;
 //credits
 //https://stackoverflow.com/questions/507138/how-to-add-a-class-to-a-given-element
-//create arrays of questions cards obj
-//starting page.
-//btn press - timer started and first question is loaded.
-//do while timer !=0 
-//once anwerd and if timer still going 
-//game logic
-//btn pressed - timer started
-function game(){
+
+function game(previousAnswer){
   
-  //check timer
-  if (timeLeft <=0) {
-    //cal score
-    //send to initial page
-  }
-  let Questions = JSON.parse(localStorage.getItem("myListOfQuestions"));  
+ 
+ 
+  let Questions = JSON.parse(window.sessionStorage.getItem("myListOfQuestions"));  
 
   // if (Questions.length > questionCounter) {
   if (Questions.length == 0) {
     //call game over
+    clearInterval(1);
+    loadEndGame();
     
   } else {
     let q = Math.floor(Math.random() * Questions.length);
 
     //send the question to the page
-    sendQ(Questions[q]);
+    sendQ(Questions[q],previousAnswer);
   
-    //show the question that was removed
+    //show the question that was removed (and remove it by splice, questions array was modified)
     let qArray = Questions.splice(q,1);
   
     //write the new array back to local storage
-    window.localStorage.setItem("myListOfQuestions",JSON.stringify(Questions));
+    window.sessionStorage.setItem("myListOfQuestions",JSON.stringify(Questions));
   }
 
 
@@ -74,29 +68,36 @@ function countdown() {
       if (timeLeft === 0) {
         timertochange.textContent = "Time: "
         clearInterval(timeInterval);
+        loadEndGame();
       } else {
         timertochange.textContent = "Time: "+timeLeft + " seconds remaining";
         timeLeft--;
       }
      
       //
-    },1000);
+    },1000,saveID(timeInterval));
+}
+function saveID(TI){
+  sessionStorage.setItem("timerId",JSON.stringify(TI));
 }
 function testAnswer(){
   //get current answer
-  let answer = localStorage.getItem("currentAnswer");
-  let testScore = localStorage.getItem("testScore");
+  let answer = sessionStorage.getItem("currentAnswer");
+  let testScore = window.sessionStorage.getItem("testScore");
   // localStorage.setItem("questionAnswered",true);
   questionCounter++;
+  let previousAnswer;
   if (answer === this.textContent) {
     //you got the answer correct 
     //add points
-    testScore += qScorePer;
-    localStorage.setItem("testScore",testScore)
+    testScore = Number(testScore) + Number(qScorePer);
+    sessionStorage.setItem("testScore",testScore);
+    previousAnswer=true;
 
   } else {
     //you got it wrong
     //-50dkp
+    previousAnswer=false;
     if (timeLeft > 10) {
       timeLeft = timeLeft-10;
     }
@@ -107,13 +108,13 @@ function testAnswer(){
   }
 
   //next question
-  game();
+  game(previousAnswer);
 
 }
 function loadStartPage(){
   let headerElement = document.querySelector("header");
   let aElement = document.createElement("a");
-  aElement.href="#";
+  aElement.href="highscores.html";
   aElement.textContent = "View High Scores";
   let labelElement = document.createElement("label");
   labelElement.classList.add("timer-mod");
@@ -163,15 +164,55 @@ function loadEndGame(){
   // cardHeader.textContent = "Quiz Question of Obj";
   card.appendChild(cardHeader);
 
+  let cardContent = document.createElement("p");
+  cardContent.textContent = "Your final score is: "+sessionStorage.getItem("testScore");
+  card.appendChild(cardContent);
+  let cardfooterinput = document.createElement("input");
+  cardfooterinput.type = "text";
+  cardfooterinput.id="initials"
+  cardfooterinput.placeholder = "Enter Initials...";
+  cardfooterinput.style.marginRight="1rem";
+  cardfooterinput.style.fontSize="2.7rem"
+  let cardFooter = document.createElement("button");
+  cardFooter.textContent = "Submit";
+  cardFooter.addEventListener('click',addScore,false);
+
+  let cardfooterstyle = document.createElement("div")
+  cardfooterstyle.classList.add("enter-initials");
+
+  cardfooterstyle.appendChild(cardfooterinput);
+  
+  cardfooterstyle.appendChild(cardFooter);
+  card.appendChild(cardfooterstyle)
+
+
+let container = document.querySelector(".quiz-question-container");
+  container.appendChild(card);
+  
+
+
 }
-function sendQ(questionGiven){
+
+function addScore(){
+  let initialsOfPerson = document.querySelector("#initials");
+
+  let person = {
+    name:initialsOfPerson.value,
+    score: sessionStorage.getItem("testScore")
+  }
+
+  let leaderBoard = [person]
+
+  window.localStorage.setItem("leaderBoard",JSON.stringify(leaderBoard))
+}
+function sendQ(questionGiven,previousAnswer){
   document.querySelector(".quiz-question-container").innerHTML="";
   //create a card
   let card = document.createElement("div");
   card.classList.add("quiz-question-card");
   
   //create header of card
-  let cardHeader = document.createElement("h2");
+  let cardHeader = document.createElement("h3");
   cardHeader.textContent = questionGiven.question;
   // cardHeader.textContent = "Quiz Question of Obj";
   card.appendChild(cardHeader);
@@ -179,7 +220,7 @@ function sendQ(questionGiven){
   //create content of card
   let cardContent = document.createElement("ol");
   //give the localstorage the answer of the question
-  localStorage.setItem("currentAnswer",questionGiven.answer);
+  sessionStorage.setItem("currentAnswer",questionGiven.answer);
   
   for (let index = 0; index < questionGiven.answers.length; index++) {
       
@@ -199,11 +240,15 @@ function sendQ(questionGiven){
   let cardFooter = document.createElement("div");
   cardFooter.classList.add("answer-result");
   
-  cardFooter.textContent = true === true ? "true":"false";
+  if (previousAnswer === undefined) {
+    cardFooter.textContent = "";
+  } else{
+    cardFooter.textContent = previousAnswer === true ? "Correct!":"Wrong!";
+  }
+
 
   card.appendChild(cardFooter);
-  
-  
+    
   let container = document.querySelector(".quiz-question-container")
   container.appendChild(card);
 
@@ -227,7 +272,7 @@ function loadQuestion(){
   
   let cardContent = document.createElement("ol");
   //give the localstorage the answer of the question
-  localStorage.setItem("currentAnswer",questionObj.answer);
+  sessionStorage.setItem("currentAnswer",questionObj.answer);
   
   for (let index = 0; index < questionObj.answers.length; index++) {
       
@@ -249,4 +294,22 @@ function loadQuestion(){
 function createDelay(){
   setTimeout(game,1000);
 }
-loadStartPage();
+function loadHighScores(){
+  let high = JSON.parse(window.localStorage.getItem("leaderBoard"));
+  let docOl = document.querySelector(".high-scores");
+  high.forEach(element => {
+    let liToAdd = document.createElement("li");
+    liToAdd.textContent = element.name + " - " + element.score;
+    docOl.appendChild(liToAdd);
+
+  });
+}
+// https://stackoverflow.com/questions/16611497/how-can-i-get-the-name-of-an-html-page-in-javascript
+var path = window.location.pathname;
+var page = path.split("/").pop();
+if (page === "index.html") {
+  loadStartPage();
+} else if (page === "highscores.html") {
+  loadHighScores();
+}
+
