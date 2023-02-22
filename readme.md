@@ -30,8 +30,8 @@ No Need to Install Just go to Link
 
 ## Usage
 
-[Link to Deployed Website](https://kevinrhode.github.io/coding-quiz/)
-[Link to Repo](https://github.com/KevinRhode/coding-quiz)
+[Link to Deployed Website](https://kevinrhode.github.io/coding-quiz/)  
+[Link to Repo](https://github.com/KevinRhode/coding-quiz)  
 
 
 ![Start](./assets/images/Start.png)

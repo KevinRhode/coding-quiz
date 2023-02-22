@@ -403,14 +403,22 @@ function createDelay(){
   setTimeout(game,1000);
 }
 function goHome(){
-  window.location.href="../index.html";
+  window.location.href="./index.html";
+
+
+  // window.location.href="../index.html";
 }
 function goHighScores(evt){
-  if (evt === undefined) {
-    window.location.href="./assets/highscores.html";
-  } else {
-    window.location.href="./highscores.html";
-  }
+
+
+  window.location.href="./highscores.html"
+
+
+  // if (evt === undefined) {
+  //   window.location.href="./assets/highscores.html";
+  // } else {
+  //   window.location.href="./highscores.html";
+  // }
   
   
   
