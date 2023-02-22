@@ -30,7 +30,17 @@ No Need to Install Just go to Link
 
 ## Usage
 
-![alt text](assets/images/screenshot.png)
+[Link to Deployed Website](https://kevinrhode.github.io/coding-quiz/)
+[Link to Repo](https://github.com/KevinRhode/coding-quiz)
+
+
+![Start](./assets/images/Start.png)
+![FirstQuestion](./assets/images/FirstQuestion.png)
+![Correct](./assets/images/Correct.png)
+![Wrong](./assets/images/Wrong.png)
+![End](./assets/images/End.png)
+![Hover](./assets/images/Hover.png)
+![Highscores](./assets/images/highscores.png)
 
 ## Credits
 
