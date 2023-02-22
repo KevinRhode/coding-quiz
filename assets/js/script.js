@@ -136,7 +136,7 @@ function testAnswer(){
 function loadStartPage(){
   let headerElement = document.querySelector("header");
   let aElement = document.createElement("a");
-  aElement.href="highscores.html";
+  aElement.href="./assets/highscores.html";
   aElement.textContent = "View High Scores";
   let labelElement = document.createElement("label");
   labelElement.classList.add("timer-mod");
@@ -403,10 +403,10 @@ function createDelay(){
   setTimeout(game,1000);
 }
 function goHome(){
-  window.location.href="index.html";
+  window.location.href="../index.html";
 }
 function goHighScores(){
-  window.location.href="highscores.html";
+  window.location.href="./assets/highscores.html";
   
 }
 function compareScore(a,b){
@@ -481,4 +481,3 @@ if (page === "index.html") {
 } else if (page === "highscores.html") {
   loadHighScores();
 }
-
