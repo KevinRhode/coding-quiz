@@ -45,7 +45,7 @@ h2{
 }
 .quiz-question-card button{
     font-size: 2rem;
-    margin-top: 2.5rem;
+    margin-top: 1.5rem;
     padding: 1rem 1.65rem;
     border-radius: 1rem;
     background-color: var(--main-background-color);
@@ -57,6 +57,7 @@ h2{
 .quiz-question-card ol{
  font-size: 1.25rem;   
  margin-top: 2rem;
+ margin-bottom: 2rem;
  width: 85%;
 }
 .quiz-question-card li {
@@ -65,4 +66,15 @@ h2{
 }
 .quiz-question-card li button{
     min-width: 15rem;
+}
+.answer-result{
+    font-size: 2rem;
+    font-weight: bolder;
+    font-style: italic;
+    opacity: 0.35;
+    width: 100%;
+    padding: 1rem 2rem;
+    border-top: #000 solid 2px;
+    justify-content: start;
+    text-align: start;
 }

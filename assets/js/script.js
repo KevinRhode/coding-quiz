@@ -18,7 +18,10 @@ let question3={
   answer:"alerts"
 }
 let questionsList = [question1,question2,question3]
+//calculate question score
+let qScorePer = 100/questionsList.length;
 localStorage.setItem("myListOfQuestions",JSON.stringify(questionsList));
+localStorage.setItem("testScore",JSON.stringify(0))
 //window.localStorage.setItem("myObject", JSON.stringify(myObject));
 questionCounter = 0;
 timerCount =0;
@@ -42,23 +45,22 @@ function game(){
   let Questions = JSON.parse(localStorage.getItem("myListOfQuestions"));  
 
   // if (Questions.length > questionCounter) {
+  if (Questions.length == 0) {
+    //call game over
+    
+  } else {
+    let q = Math.floor(Math.random() * Questions.length);
 
-  let q = Math.floor(Math.random() * Questions.length);
+    //send the question to the page
+    sendQ(Questions[q]);
+  
+    //show the question that was removed
+    let qArray = Questions.splice(q,1);
+  
+    //write the new array back to local storage
+    window.localStorage.setItem("myListOfQuestions",JSON.stringify(Questions));
+  }
 
-  //send the question to the page
-  sendQ(Questions[q]);
-
-  //show the question that was removed
-  let qArray = Questions.splice(q,1);
-
-  //write the new array back to local storage
-  window.localStorage.setItem("myListOfQuestions",JSON.stringify(Questions));
-
-  // }
-  //   localStorage.setItem("questionAnswered",false);
-  //   do {
-  //   } while (localStorage.getItem("questionAnswered"));
-  // }
 
 }
 //start countDown
@@ -83,11 +85,14 @@ function countdown() {
 function testAnswer(){
   //get current answer
   let answer = localStorage.getItem("currentAnswer");
+  let testScore = localStorage.getItem("testScore");
   // localStorage.setItem("questionAnswered",true);
   questionCounter++;
   if (answer === this.textContent) {
     //you got the answer correct 
     //add points
+    testScore += qScorePer;
+    localStorage.setItem("testScore",testScore)
 
   } else {
     //you got it wrong
@@ -146,6 +151,19 @@ function loadStartPage(){
   container.appendChild(card);
 
 }
+function loadEndGame(){
+  document.querySelector(".quiz-question-container").innerHTML="";
+  //create a card
+  let card = document.createElement("div");
+  card.classList.add("quiz-question-card");
+
+  //create header of card
+  let cardHeader = document.createElement("h2");
+  cardHeader.textContent = "All done!";
+  // cardHeader.textContent = "Quiz Question of Obj";
+  card.appendChild(cardHeader);
+
+}
 function sendQ(questionGiven){
   document.querySelector(".quiz-question-container").innerHTML="";
   //create a card
@@ -176,6 +194,14 @@ function sendQ(questionGiven){
   }
   
   card.appendChild(cardContent);
+
+  //create Footer for result of answer
+  let cardFooter = document.createElement("div");
+  cardFooter.classList.add("answer-result");
+  cardFooter.textContent = true === true ? "true":"false";
+
+  card.appendChild(cardFooter);
+  
   
   let container = document.querySelector(".quiz-question-container")
   container.appendChild(card);
