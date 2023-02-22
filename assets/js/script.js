@@ -136,7 +136,7 @@ function testAnswer(){
 function loadStartPage(){
   let headerElement = document.querySelector("header");
   let aElement = document.createElement("a");
-  aElement.href="./assets/highscores.html";
+  aElement.href="./highscores.html";
   aElement.textContent = "View High Scores";
   let labelElement = document.createElement("label");
   labelElement.classList.add("timer-mod");
