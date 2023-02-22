@@ -56,7 +56,7 @@ h2{
 .quiz-question-card button{
     font-size: 2rem;
     margin-top: 1.5rem;
-    padding: 1rem 1.65rem;
+    padding: 0.5rem 1.65rem;
     border-radius: 1rem;
     background-color: var(--main-background-color);
     color: var(--main-btn-color);
@@ -91,11 +91,57 @@ h2{
 .enter-initials{
     display: flex;
     align-items: center;
+    justify-content: center;
+}
+input#initialsText{
+    width: 50%;
 }
 .enter-initials button{
    
     margin-top: 0;
+    margin-bottom: 1rem;
    
+}
+.high-scores-header{
+    /* width: 50%; */
+    /* justify-content: center; */
+    /* margin-top: 3rem; */
+    /* text-align: center; */
+    /* display: flex; */
+    /* text-align: center; */
+    /* justify-content: center; */
+
+    margin: auto;
+    margin-top:5rem;
+    width: 55%;
+}
+
+
+.high-scores{
+    width: 50%;    
+    margin: 2px auto;
+    
+    font-size: 1.75rem;
+    
+
+}
+.high-scores li{
+    padding: 3px;
+    border-radius: 5px;
+    background-color: #b9b9b9;
+    margin: 5px 0;
+}
+.high-scores-footer{
+    margin: auto;
+    width: 52.5%;
+}
+.high-scores-footer button{
+    font-size: 1.5rem;
+    background-color: var(--main-background-color);
+    color: var(--main-btn-color);
+    border-radius:0.5rem;
+    padding: 0.25rem;
+    margin: 0 0.25rem;
 }
 
 @media screen and (min-width:556px) {

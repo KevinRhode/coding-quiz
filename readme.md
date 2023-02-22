@@ -34,13 +34,10 @@ No Need to Install Just go to Link
 
 ## Credits
 
-List your collaborators, if any, with links to their GitHub profiles.
-
-If you used any third-party assets that require attribution, list the creators with links to their primary web presence in this section.
-
-If you followed tutorials, include links to those here as well.
+[Helpful Links - Validate](https://stackoverflow.com/questions/23556533/how-do-i-make-an-input-field-accept-only-letters-in-javascript)  
+[Helpful Links - Page Navigation](https://stackoverflow.com/questions/16611497/how-can-i-get-the-name-of-an-html-page-in-javascript)  
+[Helpful Links - Sort by Obj Property](https://www.programiz.com/javascript/examples/sort-array-objectsa)
 
 ## Features
 
-implement your own questions -
-heres how
+Coming Soon...
