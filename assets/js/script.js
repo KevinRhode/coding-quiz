@@ -198,6 +198,7 @@ function sendQ(questionGiven){
   //create Footer for result of answer
   let cardFooter = document.createElement("div");
   cardFooter.classList.add("answer-result");
+  
   cardFooter.textContent = true === true ? "true":"false";
 
   card.appendChild(cardFooter);
