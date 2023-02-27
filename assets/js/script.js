@@ -45,6 +45,10 @@ window.sessionStorage.setItem("testScore",JSON.stringify(0))
 //window.localStorage.setItem("myObject", JSON.stringify(myObject));
 questionCounter = 0;
 
+//global for ID of Time Interval
+let timerID;
+
+
 // timerCount =0;
 let timeLeft = 75;
 //credits
@@ -52,14 +56,12 @@ let timeLeft = 75;
 
 function game(previousAnswer){
   
- 
- 
   let Questions = JSON.parse(window.sessionStorage.getItem("myListOfQuestions"));  
 
   // if (Questions.length > questionCounter) {
   if (Questions.length == 0) {
     //call game over
-    clearInterval(1);
+    clearInterval(timerID);
     loadEndGame(previousAnswer);
     
   } else {
@@ -95,11 +97,14 @@ function countdown() {
       }
      
       //
-    },1000,saveID(timeInterval));
+    },1000);
+
+    //set ID for clearInterval when a user runs out of questions instead of running out of time
+    timerID = timeInterval;
 }
-function saveID(TI){
-  sessionStorage.setItem("timerId",JSON.stringify(TI));
-}
+// function saveID(TI){
+//   sessionStorage.setItem("timerId",JSON.stringify(TI));
+// }
 function testAnswer(){
   //get current answer
   let answer = sessionStorage.getItem("currentAnswer");
@@ -113,7 +118,9 @@ function testAnswer(){
     //you got the answer correct 
     //add points
     testScore = Number(testScore) + Number(qScorePer);
+    //update test score
     sessionStorage.setItem("testScore",testScore);
+    //set previous answer to show user
     previousAnswer=true;
 
   } else {
@@ -121,9 +128,11 @@ function testAnswer(){
     //-50dkp
     previousAnswer=false;
     if (timeLeft > 10) {
+      //penalty for wrong answer
       timeLeft = timeLeft-10;
     }
     else{
+      // if less then 10 secs lets sent to zero to handle game end
       timeLeft = 0;
     }
 
@@ -136,11 +145,14 @@ function testAnswer(){
 function loadStartPage(){
   let headerElement = document.querySelector("header");
   let aElement = document.createElement("a");
+  //link for page
   aElement.href="./highscores.html";
   aElement.textContent = "View High Scores";
   let labelElement = document.createElement("label");
   labelElement.classList.add("timer-mod");
   labelElement.textContent = "Time: 0";//"Time: " + timerCount;
+
+  //add to document
   headerElement.appendChild(aElement);
   headerElement.appendChild(labelElement);
   
@@ -166,63 +178,39 @@ function loadStartPage(){
   cardFooter.textContent ="Start Quiz";
   cardFooter.classList.add("start-quiz");
   cardFooter.addEventListener('click',countdown,false);
+  //to get the timing right, for when a user clicks start quiz. for the timer to not show 0, and then change.
   cardFooter.addEventListener('click',createDelay,false);
   
   card.appendChild(cardFooter);
-
-  // testing localStorage if someone hadnt played the game
-  // let cleartest = document.createElement("button");
-  // cleartest.addEventListener('click',clearKeys,false);
-  // cleartest.classList.add("start-quiz");
-  // cleartest.classList.textContent="Clear";
-  // card.appendChild(cleartest);
-
-
-  
- 
-
-
   
   let container = document.querySelector(".quiz-question-container")
   container.appendChild(card);
 
 }
 function validate(evt){
-  if (document.querySelector("#initialsText").value === "") {
-    //do something
+  if (document.querySelector("#initialsText").value === "") {//no unput on the text box
     //https://stackoverflow.com/questions/23556533/how-do-i-make-an-input-field-accept-only-letters-in-javascript
     document.querySelector("#initialsText").placeholder = "Please Enter Initials...";
     evt.preventDefault();
-  } else if (!/^[a-zA-Z]*$/g.test(document.querySelector("#initialsText").value)) {
+    
+  } else if (!/^[a-zA-Z\s*]*$/g.test(document.querySelector("#initialsText").value)) { //check to see if letters, upper and lower or whitespace (added /s* for many spaces)
+    // clear input
     document.querySelector("#initialsText").value = "";
-    document.querySelector("#initialsText").placeholder = "Only Letters for Initials...";
+    //tell user what went wrong throuhg the placeholder of the input
+    document.querySelector("#initialsText").placeholder = "Only Letters...";
     evt.preventDefault();
-  } else if (document.querySelector("#initialsText").value.length < 2) {
+  } else if (document.querySelector("#initialsText").value.length < 2) {//need minimun 2 initials
+     // clear input
     document.querySelector("#initialsText").value = "";
+    //tell user what went wrong throuhg the placeholder of the input
     document.querySelector("#initialsText").placeholder = "Min 2 characters...";
     evt.preventDefault();
   }
   else {
+    //input validated, call add score
     addScore();
   }
-  //ran into subit issue so i removed the form to get the page to goto highscores without an ajax call
-  // if (document.forms["initials"]["initialsText"].value === "") {
-  //   //do something
-    
-  //   document.forms["initials"]["initialsText"].placeholder = "Please Enter Initials...";
-  //   evt.preventDefault();
-  // } else if (!/^[a-zA-Z]*$/g.test(document.forms["initials"]["initialsText"].value)) {
-  //   document.forms["initials"]["initialsText"].value = "";
-  //   document.forms["initials"]["initialsText"].placeholder = "Only Letters for Initials...";
-  //   evt.preventDefault();
-  // } else if (document.forms["initials"]["initialsText"].value.length < 2) {
-  //   document.forms["initials"]["initialsText"].value = "";
-  //   document.forms["initials"]["initialsText"].placeholder = "Min 2 characters...";
-  //   evt.preventDefault();
-  // }
-  // else {
-  //   addScore();
-  // }
+ 
 }
 function loadEndGame(previousAnswer){
   document.querySelector(".quiz-question-container").innerHTML="";
@@ -269,7 +257,7 @@ function loadEndGame(previousAnswer){
 //create Footer for result of answer
 let cardFootersfooter = document.createElement("div");
 cardFootersfooter.classList.add("answer-result");
-
+//handle first question when there is no answer posible
 if (previousAnswer === undefined) {
   cardFootersfooter.textContent = "";
 } else{
@@ -301,14 +289,17 @@ function addScore(){
     score: sessionStorage.getItem("testScore")
   }
   try {
+    //try to add user to score with previous scores
     let leaderBoard = JSON.parse(window.localStorage.getItem("leaderBoard"));
     leaderBoard.push(person);
     window.localStorage.setItem("leaderBoard",JSON.stringify(leaderBoard));
   } catch (error) {
+    //first time finishing the test or if there are no scores saved
     let leaderBoard = [person];
     window.localStorage.setItem("leaderBoard",JSON.stringify(leaderBoard));
   } 
 
+  //go to high score page
   goHighScores();
   
 }
@@ -423,18 +414,22 @@ function goHighScores(evt){
   
   
 }
-
+//to sort object list by score property
 function compareScore(a,b){
   let value1 = a.score;
   let value2 = b.score;
   return value2-value1;
     
 }
-function clearKeys(){
-  window.localStorage.clear();
-}
+// function clearKeys(){
+//   //used to testing
+//   window.localStorage.clear();
+// }
 function clearLeaderBoard(){
+  //set leaderBoard to ""
   window.localStorage.setItem("leaderBoard", "");
+  goHighScores();
+
 }
 function loadHighScores(){
   let high;
@@ -478,7 +473,7 @@ function loadHighScores(){
   let clearHighScores = document.createElement("button");
   clearHighScores.textContent = "Clear Highscores";
   clearHighScores.addEventListener('click',clearLeaderBoard,false);
-  clearHighScores.addEventListener('click',goHighScores,false);
+  // clearHighScores.addEventListener('click',goHighScores,false);
   document.querySelector(".high-scores-footer").appendChild(clearHighScores);
 
 
@@ -488,11 +483,12 @@ function loadHighScores(){
 
   // });
 }
-// https://stackoverflow.com/questions/16611497/how-can-i-get-the-name-of-an-html-page-in-javascript
+function init(){
+  // https://stackoverflow.com/questions/16611497/how-can-i-get-the-name-of-an-html-page-in-javascript
 var path = window.location.pathname;
-var path2 = window.location.origin;
-var path3 = window.location.hostname;
-var path4 = window.location.href;
+// var path2 = window.location.origin;
+// var path3 = window.location.hostname;
+// var path4 = window.location.href;
 var page = path.split("/").pop();
 if (page === "index.html") {
   loadStartPage();
@@ -502,4 +498,5 @@ if (page === "index.html") {
   //test for gitpages
   loadStartPage();
 }
-
+}
+init()

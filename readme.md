@@ -2,7 +2,7 @@
 
 ## Description
 
-To create a resource I could not only show off to potential employers, but learn and improve my knowledge of the document API. I will be able to reuse this project by creating quiz cards of questions for each of the subjects I wish to review. I gives me a resource to continually improve upon. I learned a better understanding of the document, when to make use of calls, and how to create a interactive knowledge base.
+To create a resource I could not only show off to potential employers, but learn and improve my knowledge of the document API. I will be able to reuse this project by creating quiz cards of questions for each of the subjects I wish to review. It gives me a resource to continually improve upon. I learned a better understanding of the document, when to make use of calls, and how to create a interactive knowledge base.
 
 ## User Story
 
